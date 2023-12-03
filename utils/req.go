@@ -37,6 +37,10 @@ func MakeRequest(day int) string {
 	return string(body)
 }
 
+func FormatInput(input string) []string {
+	return strings.Split(strings.TrimSuffix(input, "\n"), "\n")
+}
+
 func FormattedRequest(day int) []string {
-	return strings.Split(strings.TrimSuffix(MakeRequest(day), "\n"), "\n")
+	return FormatInput(MakeRequest(day))
 }
