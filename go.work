@@ -1,6 +1,7 @@
 go 1.21.4
 
 use (
-	day1
 	utils
+	day1
+	day2
 )
