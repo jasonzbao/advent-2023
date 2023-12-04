@@ -18,20 +18,6 @@ const dummy = `
 .664.598..
 `
 
-func touchAround(x, y int, input []string, fn func(int, int)) {
-	for i := x - 1; i <= x+1; i++ {
-		for j := y - 1; j <= y+1; j++ {
-			if i == x && j == y {
-				continue
-			}
-			if i < 0 || j < 0 || i >= len(input) || j >= len(input[i]) {
-				continue
-			}
-			fn(i, j)
-		}
-	}
-}
-
 func part1(input []string) {
 	sum := 0
 	seen := make(map[int]bool)
@@ -40,12 +26,15 @@ func part1(input []string) {
 			if utils.IsDigit(input[i][j]) || string(input[i][j]) == "." {
 				continue
 			}
-			touchAround(i, j, input, func(x, y int) {
+			utils.TouchAround(i, j, input, func(x, y int) {
 				if seen[x*len(input[y])+y] {
 					return
 				}
 				if utils.IsDigit(input[x][y]) {
-					partNumber := utils.ExtractNum(y, input[x], seen, x)
+					partNumber, start, end := utils.ExtractNum(y, input[x])
+					for k := start; k <= end; k++ {
+						seen[x*len(input[y])+k] = true
+					}
 					sum += partNumber
 				}
 			})
@@ -64,12 +53,15 @@ func part2(input []string) {
 			}
 			gears := make([]int, 0)
 			seen := make(map[int]bool)
-			touchAround(i, j, input, func(x, y int) {
+			utils.TouchAround(i, j, input, func(x, y int) {
 				if seen[x*len(input[y])+y] {
 					return
 				}
 				if utils.IsDigit(input[x][y]) {
-					partNumber := utils.ExtractNum(y, input[x], seen, x)
+					partNumber, start, end := utils.ExtractNum(y, input[x])
+					for k := start; k <= end; k++ {
+						seen[x*len(input[y])+k] = true
+					}
 					gears = append(gears, partNumber)
 				}
 			})
