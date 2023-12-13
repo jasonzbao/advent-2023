@@ -51,23 +51,16 @@ func isReflection(board [][]string, line float64, isVertical bool, success func(
 	}
 }
 
-func part1(boards [][][]string) {
+func solve(boards [][][]string, success func(int) bool) {
 	sum := 0
-	for boardNumber, board := range boards {
-		fmt.Println(board)
+	for _, board := range boards {
 		for i := .5; i < float64(len(board[0])-1); i++ {
-			if isReflection(board, i, false, func(errors int) bool {
-				return errors == 0
-			}) {
-				fmt.Println("board", boardNumber, "is reflection on ", i+.5, "vertical")
+			if isReflection(board, i, false, success) {
 				sum += int(i + .5)
 			}
 		}
 		for i := .5; i < float64(len(board)-1); i++ {
-			if isReflection(board, i, true, func(errors int) bool {
-				return errors == 0
-			}) {
-				fmt.Println("board", boardNumber, "is reflection on ", i+.5, "horizontal")
+			if isReflection(board, i, true, success) {
 				sum += int(i+.5) * 100
 			}
 		}
@@ -75,28 +68,16 @@ func part1(boards [][][]string) {
 	fmt.Println(sum)
 }
 
+func part1(boards [][][]string) {
+	solve(boards, func(errors int) bool {
+		return errors == 0
+	})
+}
+
 func part2(boards [][][]string) {
-	sum := 0
-	for boardNumber, board := range boards {
-		fmt.Println(board)
-		for i := .5; i < float64(len(board[0])-1); i++ {
-			if isReflection(board, i, false, func(errors int) bool {
-				return errors == 1
-			}) {
-				fmt.Println("board", boardNumber, "is reflection on ", i+.5, "vertical")
-				sum += int(i + .5)
-			}
-		}
-		for i := .5; i < float64(len(board)-1); i++ {
-			if isReflection(board, i, true, func(errors int) bool {
-				return errors == 1
-			}) {
-				fmt.Println("board", boardNumber, "is reflection on ", i+.5, "horizontal")
-				sum += int(i+.5) * 100
-			}
-		}
-	}
-	fmt.Println(sum)
+	solve(boards, func(errors int) bool {
+		return errors == 1
+	})
 }
 
 func main() {
