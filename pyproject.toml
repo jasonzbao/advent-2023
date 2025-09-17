@@ -1,0 +1,12 @@
+[tool.poetry]
+name = "advent-2023"
+version = "0.1.0"
+description = "advent of code"
+authors = ["Jason Bao <bao.jason.z@gmail.com>"]
+packages = [
+    { include = "pythonutils" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "^2.32.5"
