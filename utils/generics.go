@@ -24,3 +24,13 @@ func GenericPow[T Number](a, b T) T {
 	}
 	return ret
 }
+
+func GenericMin[T cmp.Ordered](a []T) T {
+	ret := a[0]
+	for _, v := range a {
+		if v < ret {
+			ret = v
+		}
+	}
+	return ret
+}
